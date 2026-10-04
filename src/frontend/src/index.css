@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Figtree", sans-serif;
+    --font-body: "Figtree", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --radius: 0.75rem;
+
+    /* Campus Commons — light */
+    --background: 0.985 0.006 210;
+    --foreground: 0.22 0.02 220;
+    --card: 1.0 0.003 210;
+    --card-foreground: 0.22 0.02 220;
+    --popover: 1.0 0.003 210;
+    --popover-foreground: 0.22 0.02 220;
+
+    --primary: 0.42 0.11 195;
+    --primary-foreground: 0.99 0.005 195;
+
+    --secondary: 0.95 0.012 210;
+    --secondary-foreground: 0.32 0.02 220;
+    --muted: 0.955 0.01 210;
+    --muted-foreground: 0.52 0.018 220;
+
+    --accent: 0.62 0.16 35;
+    --accent-foreground: 0.99 0.005 35;
+
+    --destructive: 0.56 0.21 27;
+    --destructive-foreground: 0.99 0.005 27;
+
+    --success: 0.58 0.14 155;
+    --warning: 0.72 0.15 78;
+
+    --border: 0.9 0.01 215;
+    --input: 0.9 0.01 215;
+    --ring: 0.42 0.11 195;
+
+    /* Category coding — functional heart of the hub */
+    --cat-academic: 0.55 0.11 195;
+    --cat-exam: 0.5 0.15 275;
+    --cat-fee: 0.68 0.14 70;
+    --cat-general: 0.55 0.02 230;
+    --cat-urgent: 0.58 0.21 27;
+
+    --chart-1: 0.55 0.11 195;
+    --chart-2: 0.5 0.15 275;
+    --chart-3: 0.68 0.14 70;
+    --chart-4: 0.62 0.16 35;
+    --chart-5: 0.58 0.14 155;
+
+    --sidebar: 0.975 0.009 205;
+    --sidebar-foreground: 0.22 0.02 220;
+    --sidebar-primary: 0.42 0.11 195;
+    --sidebar-primary-foreground: 0.99 0.005 195;
+    --sidebar-accent: 0.93 0.015 205;
+    --sidebar-accent-foreground: 0.3 0.02 220;
+    --sidebar-border: 0.9 0.01 215;
+    --sidebar-ring: 0.42 0.11 195;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.46 0.11 195),
+      oklch(0.38 0.1 210)
+    );
+    --gradient-urgent: linear-gradient(
+      180deg,
+      oklch(0.62 0.17 35),
+      oklch(0.56 0.21 27)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0.16 0.014 220;
+    --foreground: 0.93 0.008 210;
+    --card: 0.2 0.016 220;
+    --card-foreground: 0.93 0.008 210;
+    --popover: 0.22 0.016 220;
+    --popover-foreground: 0.93 0.008 210;
+
+    --primary: 0.72 0.12 190;
+    --primary-foreground: 0.16 0.014 200;
+
+    --secondary: 0.25 0.018 220;
+    --secondary-foreground: 0.86 0.008 210;
+    --muted: 0.25 0.018 220;
+    --muted-foreground: 0.62 0.012 215;
+
+    --accent: 0.7 0.15 40;
+    --accent-foreground: 0.16 0.014 40;
+
+    --destructive: 0.64 0.2 27;
+    --destructive-foreground: 0.16 0.014 27;
+
+    --success: 0.68 0.14 155;
+    --warning: 0.78 0.14 80;
+
+    --border: 0.3 0.018 220;
+    --input: 0.3 0.018 220;
+    --ring: 0.72 0.12 190;
+
+    --cat-academic: 0.7 0.12 190;
+    --cat-exam: 0.68 0.15 275;
+    --cat-fee: 0.78 0.14 75;
+    --cat-general: 0.7 0.02 230;
+    --cat-urgent: 0.66 0.2 27;
+
+    --chart-1: 0.7 0.12 190;
+    --chart-2: 0.68 0.15 275;
+    --chart-3: 0.78 0.14 75;
+    --chart-4: 0.7 0.15 40;
+    --chart-5: 0.68 0.14 155;
+
+    --sidebar: 0.18 0.015 220;
+    --sidebar-foreground: 0.93 0.008 210;
+    --sidebar-primary: 0.72 0.12 190;
+    --sidebar-primary-foreground: 0.16 0.014 200;
+    --sidebar-accent: 0.25 0.018 220;
+    --sidebar-accent-foreground: 0.86 0.008 210;
+    --sidebar-border: 0.3 0.018 220;
+    --sidebar-ring: 0.72 0.12 190;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.72 0.12 190),
+      oklch(0.6 0.12 210)
+    );
+    --gradient-urgent: linear-gradient(
+      180deg,
+      oklch(0.7 0.16 40),
+      oklch(0.64 0.2 27)
+    );
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-urgent {
+    background-image: var(--gradient-urgent);
+  }
+
+  /* Category rail tokens for feed cards */
+  .rail-academic {
+    background-color: oklch(var(--cat-academic));
+  }
+  .rail-exam {
+    background-color: oklch(var(--cat-exam));
+  }
+  .rail-fee {
+    background-color: oklch(var(--cat-fee));
+  }
+  .rail-general {
+    background-color: oklch(var(--cat-general));
+  }
+  .rail-urgent {
+    background-image: var(--gradient-urgent);
+  }
+
+  .text-cat-academic {
+    color: oklch(var(--cat-academic));
+  }
+  .text-cat-exam {
+    color: oklch(var(--cat-exam));
+  }
+  .text-cat-fee {
+    color: oklch(var(--cat-fee));
+  }
+  .text-cat-general {
+    color: oklch(var(--cat-general));
+  }
+  .text-cat-urgent {
+    color: oklch(var(--cat-urgent));
+  }
+}

@@ -1,0 +1,154 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type Attachment__3138567 = {blob : Blob; filename : Text; mimeType : Text};
+type Attachment__844216162 = {blob : Blob; filename : Text; mimeType : Text};
+type ClassSlot__363123979 =
+  {
+    dayOfWeek : DayOfWeek__1049720078;
+    endTime : Text;
+    id : ItemId__833640393;
+    instructor : Text;
+    room : Text;
+    startTime : Text;
+    subject : Text
+  };
+type ClassSlot__589758900 =
+  {
+    dayOfWeek : DayOfWeek__1007110659;
+    endTime : Text;
+    id : Nat;
+    instructor : Text;
+    room : Text;
+    startTime : Text;
+    subject : Text
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type DayOfWeek__1007110659 =
+  {#friday; #monday; #saturday; #sunday; #thursday; #tuesday; #wednesday};
+type DayOfWeek__1049720078 =
+  {#friday; #monday; #saturday; #sunday; #thursday; #tuesday; #wednesday};
+type EventType__417988997 = {#activity; #competition; #event; #workshop};
+type EventType__996971201 = {#activity; #competition; #event; #workshop};
+type Event__543096582 =
+  {
+    attachments : [Attachment__3138567];
+    description : Text;
+    endAt : Timestamp__301639476;
+    eventType : EventType__417988997;
+    id : ItemId__833640393;
+    organiser : Text;
+    registrationInfo : Text;
+    startAt : Timestamp__301639476;
+    title : Text;
+    venue : Text
+  };
+type Event__891390609 =
+  {
+    attachments : [Attachment__844216162];
+    description : Text;
+    endAt : Int;
+    eventType : EventType__996971201;
+    id : Nat;
+    organiser : Text;
+    registrationInfo : Text;
+    startAt : Int;
+    title : Text;
+    venue : Text
+  };
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type ItemId__833640393 = Nat;
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__694455010 =
+  {
+    accessControlState : AccessControlState__201339279;
+    classesState :
+      {
+        classes : Map__230067015<Nat, ClassSlot__589758900>;
+        var nextClassId : Nat;
+        var nextSyllabusId : Nat;
+        syllabus : Map__230067015<Nat, SyllabusEntry__11021091>
+      };
+    eventsState :
+      {events : Map__230067015<Nat, Event__891390609>; var nextId : Nat};
+    noticesState :
+      {var nextId : Nat; notices : Map__230067015<Nat, Notice__589550869>}
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type NoticeCategory__141272873 = {#academic; #exam; #fee; #general; #urgent};
+type NoticeCategory__241178881 = {#academic; #exam; #fee; #general; #urgent};
+type Notice__313028600 =
+  {
+    attachments : [Attachment__3138567];
+    author : Principal;
+    body : Text;
+    category : NoticeCategory__241178881;
+    id : ItemId__833640393;
+    pinned : Bool;
+    postedAt : Timestamp__301639476;
+    title : Text
+  };
+type Notice__589550869 =
+  {
+    attachments : [Attachment__844216162];
+    author : Principal;
+    body : Text;
+    category : NoticeCategory__141272873;
+    id : Nat;
+    pinned : Bool;
+    postedAt : Int;
+    title : Text
+  };
+type OldActor__463938666 = {};
+type SyllabusEntry__11021091 =
+  {
+    attachments : [Attachment__844216162];
+    id : Nat;
+    materialLink : ?Text;
+    subject : Text;
+    topics : [SyllabusTopic__504919879]
+  };
+type SyllabusEntry__486039644 =
+  {
+    attachments : [Attachment__3138567];
+    id : ItemId__833640393;
+    materialLink : ?Text;
+    subject : Text;
+    topics : [SyllabusTopic__901295442]
+  };
+type SyllabusTopic__504919879 = {description : Text; title : Text};
+type SyllabusTopic__901295442 = {description : Text; title : Text};
+type Timestamp__301639476 = Int;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20261003_000000" : OldActor__463938666 -> NewActor__694455010
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable classesState :
+    {
+      classes : Map__230067015<Nat, ClassSlot__363123979>;
+      var nextClassId : Nat;
+      var nextSyllabusId : Nat;
+      syllabus : Map__230067015<Nat, SyllabusEntry__486039644>
+    };
+  stable eventsState :
+    {events : Map__230067015<Nat, Event__543096582>; var nextId : Nat};
+  stable noticesState :
+    {var nextId : Nat; notices : Map__230067015<Nat, Notice__313028600>}
+};

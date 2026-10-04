@@ -1,0 +1,279 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = int;
+type SyllabusTopic = 
+ record {
+   description: text;
+   title: text;
+ };
+type SyllabusInput = 
+ record {
+   attachments: vec Attachment;
+   materialLink: opt text;
+   subject: text;
+   topics: vec SyllabusTopic;
+ };
+type SyllabusEntry = 
+ record {
+   attachments: vec Attachment;
+   id: ItemId;
+   materialLink: opt text;
+   subject: text;
+   topics: vec SyllabusTopic;
+ };
+type SummaryCounts = 
+ record {
+   newNotices: nat;
+   todaysClasses: nat;
+   upcomingEvents: nat;
+ };
+type SubjectDetail = 
+ record {
+   classes: vec ClassSlot;
+   subject: text;
+   syllabus: opt SyllabusEntry;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type NoticeSort = 
+ variant {
+   newest;
+   oldest;
+ };
+type NoticeInput = 
+ record {
+   attachments: vec Attachment;
+   body: text;
+   category: NoticeCategory;
+   pinned: bool;
+   title: text;
+ };
+type NoticeFilter = 
+ record {
+   category: opt NoticeCategory;
+   search: opt text;
+   sort: opt NoticeSort;
+ };
+type NoticeCategory = 
+ variant {
+   academic;
+   exam;
+   fee;
+   general;
+   urgent;
+ };
+type Notice = 
+ record {
+   attachments: vec Attachment;
+   author: principal;
+   body: text;
+   category: NoticeCategory;
+   id: ItemId;
+   pinned: bool;
+   postedAt: Timestamp;
+   title: text;
+ };
+type ItemId = nat;
+type FeedKind = 
+ variant {
+   competition;
+   event;
+   notice;
+ };
+type FeedItem = 
+ record {
+   at: Timestamp;
+   eventType: opt EventType;
+   id: ItemId;
+   kind: FeedKind;
+   noticeCategory: opt NoticeCategory;
+   pinned: bool;
+   preview: text;
+   title: text;
+ };
+type EventType = 
+ variant {
+   activity;
+   competition;
+   event;
+   workshop;
+ };
+type EventTimeFilter = 
+ variant {
+   all;
+   past;
+   upcoming;
+ };
+type EventInput = 
+ record {
+   attachments: vec Attachment;
+   description: text;
+   endAt: Timestamp;
+   eventType: EventType;
+   organiser: text;
+   registrationInfo: text;
+   startAt: Timestamp;
+   title: text;
+   venue: text;
+ };
+type EventFilter = 
+ record {
+   eventType: opt EventType;
+   search: opt text;
+   time: opt EventTimeFilter;
+ };
+type Event = 
+ record {
+   attachments: vec Attachment;
+   description: text;
+   endAt: Timestamp;
+   eventType: EventType;
+   id: ItemId;
+   organiser: text;
+   registrationInfo: text;
+   startAt: Timestamp;
+   title: text;
+   venue: text;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type DayOfWeek = 
+ variant {
+   friday;
+   monday;
+   saturday;
+   sunday;
+   thursday;
+   tuesday;
+   wednesday;
+ };
+type ClassSlot = 
+ record {
+   dayOfWeek: DayOfWeek;
+   endTime: text;
+   id: ItemId;
+   instructor: text;
+   room: text;
+   startTime: text;
+   subject: text;
+ };
+type ClassInput = 
+ record {
+   dayOfWeek: DayOfWeek;
+   endTime: text;
+   instructor: text;
+   room: text;
+   startTime: text;
+   subject: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type Attachment = 
+ record {
+   "blob": blob;
+   filename: text;
+   mimeType: text;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Admin-only: create a class slot. Returns the new id.
+  createClass: (input: ClassInput) -> (nat);
+  /// Admin-only: create an event or competition. Returns the new event id.
+  createEvent: (input: EventInput) -> (nat);
+  /// Admin-only: create a notice. Returns the new notice id.
+  createNotice: (input: NoticeInput) -> (nat);
+  /// Admin-only: create a syllabus entry. Returns the new id.
+  createSyllabus: (input: SyllabusInput) -> (nat);
+  /// Admin-only: delete a class slot. Returns false when the id is unknown.
+  deleteClass: (id: nat) -> (bool);
+  /// Admin-only: delete an event. Returns false when the id is unknown.
+  deleteEvent: (id: nat) -> (bool);
+  /// Admin-only: delete a notice. Returns false when the id is unknown.
+  deleteNotice: (id: nat) -> (bool);
+  /// Admin-only: delete a syllabus entry. Returns false when the id is unknown.
+  deleteSyllabus: (id: nat) -> (bool);
+  execute: (qJson: text) -> (Result) query;
+  /// Returns the backend API documentation as Markdown.
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// Fetch a single class slot by id; null when it does not exist.
+  getClass: (id: nat) -> (opt ClassSlot) query;
+  /// Fetch a single event by id; null when it does not exist.
+  getEvent: (id: nat) -> (opt Event) query;
+  /// Unified "Latest Updates" feed: pinned notices first, then recent notices,
+  /// events, and competitions newest first, capped at `limit`.
+  getLatestFeed: (limit: nat) -> (vec FeedItem) query;
+  /// Fetch a single notice by id; null when it does not exist.
+  getNotice: (id: nat) -> (opt Notice) query;
+  /// Subject detail: syllabus outline plus associated class schedule.
+  getSubjectDetail: (subject: text) -> (opt SubjectDetail) query;
+  /// Quick-glance dashboard counts: upcoming events, new notices, today's classes.
+  getSummaryCounts: () -> (SummaryCounts) query;
+  /// Fetch a syllabus entry by id; null when it does not exist.
+  getSyllabus: (id: nat) -> (opt SyllabusEntry) query;
+  isCallerAdmin: () -> (bool) query;
+  /// List class slots, optionally restricted to a single day of the week.
+  listClasses: (day: opt DayOfWeek) -> (vec ClassSlot) query;
+  /// List events with optional type filter, upcoming/past filter, and keyword search.
+  listEvents: (filter: EventFilter) -> (vec Event) query;
+  /// List notices with optional category filter, keyword search, and sort order.
+  listNotices: (filter: NoticeFilter) -> (vec Notice) query;
+  /// List all syllabus entries.
+  listSyllabus: () -> (vec SyllabusEntry) query;
+  schema: () -> (text) query;
+  /// Admin-only: update an existing class slot. Returns false when the id is unknown.
+  updateClass: (id: nat, input: ClassInput) -> (bool);
+  /// Admin-only: update an existing event. Returns false when the id is unknown.
+  updateEvent: (id: nat, input: EventInput) -> (bool);
+  /// Admin-only: update an existing notice. Returns false when the id is unknown.
+  updateNotice: (id: nat, input: NoticeInput) -> (bool);
+  /// Admin-only: update an existing syllabus entry. Returns false when the id is unknown.
+  updateSyllabus: (id: nat, input: SyllabusInput) -> (bool);
+}

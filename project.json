@@ -1,0 +1,20 @@
+{
+  "overview": "A single hub where college students see every notice, event, competition, class, and syllabus update in one place.",
+  "features": [
+    "Home feed merging the latest notices, events, and competitions",
+    "Browse and search notices with category filters",
+    "Events and competitions with dates, venues, and details",
+    "Weekly class timetable and syllabus reference per subject",
+    "Admin sign-in to publish and manage all content",
+    "File attachments for notices and events"
+  ],
+  "category": "productivity",
+  "tags": [
+    "education",
+    "college",
+    "notices",
+    "events",
+    "timetable"
+  ],
+  "last_updated": "2026-10-03T18:59:30.253Z"
+}
